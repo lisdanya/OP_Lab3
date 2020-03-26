@@ -29,10 +29,32 @@ def calc(polish):
             stack.append(token)
     return stack[0]
 
+
+def ShuntingYard(parsed_formulas):
+    stack = []
+    for token in parsed_formulas:
+        if token in oper:
+            while stack and stack[-1] != "(" and oper[token][0] <= oper[stack[-1]][0]:
+                yield stack.pop()
+            stack.append(token)
+        elif token == ")":
+            while stack:
+                x = stack.pop()
+            if x == "(":
+                break
+                yield x
+        elif token == "(":
+            stack.append(token)
+        else:
+            yield token
+    while stack:
+        yield stack.pop()
+
+
 if len(sys.argv) > 1:
     formulaa = ""
     for i in range(1, len(sys.argv)):
         formulaa = str(formulaa) + str(sys.argv[i])
-    print("Result: ")
+    print("Result: ",calc(ShuntingYard(parse(formulaa))))
 else:
     print("ERROR")
