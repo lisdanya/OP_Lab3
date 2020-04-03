@@ -1,7 +1,9 @@
 import sys
 
+# так как символ ^ и ** работают некорректно ,вместо '^' вводится '?' , а вместо '**' вводится '!'
 oper = {'+': (1, lambda x, y: x + y), '-': (1, lambda x, y: x - y),
-        '*': (2, lambda x, y: x * y), '/': (2, lambda x, y: x / y)}
+        '!': (2, lambda x, y: x ** y), '/': (2, lambda x, y: x / y),
+        '*': (2, lambda x, y: x * y), '?': (2, lambda x, y: int(x) ^ int(y))}
 
 
 def parse(formula_string):
@@ -55,6 +57,6 @@ if len(sys.argv) > 1:
     formulaa = ""
     for i in range(1, len(sys.argv)):
         formulaa = str(formulaa) + str(sys.argv[i])
-    print("Result: ",calc(ShuntingYard(parse(formulaa))))
+    print("Result: ", calc(ShuntingYard(parse(formulaa))))
 else:
     print("ERROR")
